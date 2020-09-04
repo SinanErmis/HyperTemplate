@@ -1,6 +1,6 @@
 ﻿using DG.Tweening;
 
-namespace Rhodos.Core
+namespace Rhodos.UI
 {
     public class InGame : UIScreen
     {

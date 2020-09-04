@@ -1,8 +1,9 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Rhodos.Core;
 
-namespace Rhodos.Core
+namespace Rhodos.UI
 {
     public class MainMenu : UIScreen
     {
@@ -12,7 +13,7 @@ namespace Rhodos.Core
         public override void OnStart()
         {
             UpdateLevelCounter();
-            PlayInAnimation();
+            Activate();
         }
 
         private void UpdateLevelCounter()
@@ -35,8 +36,6 @@ namespace Rhodos.Core
                                           .SetEase(Ease.OutBack).OnStart(() =>
                                               t_playButton
                                                   .DOAnchorPos(oldPosOfPlayButton, 1f).From(Vector2.down * 100f)));
-
-            Debug.Log(oldPosOfLevelCounter);
             return sequence;
         }
 
