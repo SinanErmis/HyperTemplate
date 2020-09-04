@@ -17,6 +17,7 @@ namespace Rhodos.Core
 
         private void UpdateLevelCounter()
         {
+            //Level counter logic starts counting from 0, but user will see level sign starts from 1. 
             levelCounter.text = "Level " + (SaveLoadManager.GetLevel() + 1);
         }
 

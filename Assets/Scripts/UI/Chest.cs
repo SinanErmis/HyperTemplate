@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 namespace Rhodos.Core
 {
+    /// <summary>
+    /// In progress.
+    /// </summary>
     public class Chest : MonoBehaviour
     {
         private Image _image;
@@ -16,22 +19,25 @@ namespace Rhodos.Core
         private void Awake()
         {
             _image = box.GetComponent<Image>();
-            Init(0.5f);
-        }
-
-        public void Init(float startingFillAmount)
-        {
-            _image.fillAmount = startingFillAmount;
+            
+            //Start "idle" animation
             background.DORotate(new Vector3(0, 0, 5f), 1f).SetEase(Ease.Linear).SetRelative(true)
                       .SetLoops(-1, LoopType.Incremental);
             _scaleAnimation = box.DOScale(Vector3.one * 1.05f, 0.6f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
         }
 
-        private void Update()
+        public void Init(float startingFillAmount)
+        {
+            _image.fillAmount = startingFillAmount;
+        }
+        
+        #if UNITY_EDITOR
+        private void Update() //For debugging easily
         {
             if (Input.GetMouseButtonDown(0)) Fill(0.1f);
             else if (Input.GetMouseButtonDown(1)) Fill(-0.10f);
         }
+        #endif
 
         public Coroutine Fill(float addition)
         {
@@ -48,7 +54,7 @@ namespace Rhodos.Core
 
                     yield return _image.DOFillAmount(firstStep, firstStep);
                     _scaleAnimation.Pause();
-                    
+
                     yield return StartCoroutine(OpenChest());
 
                     _image.fillAmount = 0f;

@@ -3,10 +3,14 @@ using UnityEngine;
 
 namespace Rhodos.Core
 {
-    public class AdManager : MonoBehaviour
+    /// <summary>
+    /// This class for can be used for send analytics events to the server. Thanks to the event driven design, it is easy to
+    /// extend and implement different SDK's 
+    /// </summary>
+    public class AnalyticsManager : MonoBehaviour
     {
         private static float _lastInterstitialTime;
-        public static AdManager instance;
+        public static AnalyticsManager instance;
 
         private int _lastPlayedLevelOrder = -1;
 
@@ -52,7 +56,6 @@ namespace Rhodos.Core
         {
             if (Time.realtimeSinceStartup - _lastInterstitialTime >= 30f)
             {
-                //AnalyticsHandler.SendEvent(“Fake_Inter”, “Fake_Inter”);
                 SendEvent("Fake_interstitial");
                 IncreaseLifetimeInterstitial();
                 SendEvent($"Lifetime_Interstitial_{GetLifetimeInterstitial()}");
