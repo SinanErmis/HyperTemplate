@@ -7,12 +7,12 @@
 
         public override void SubscribeEvents()
         {
-            EventManager.OnTouchActionChanged += ChangeEventsWithEnum;
+            CentralEventManager.OnTouchActionChanged += ChangeEventsWithEnum;
         }
 
         public override void UnsubscribeEvents()
         {
-            EventManager.OnTouchActionChanged -= ChangeEventsWithEnum;
+            CentralEventManager.OnTouchActionChanged -= ChangeEventsWithEnum;
         }
 
         public override void PreAwake()
@@ -41,16 +41,16 @@
 
         private void SubscribeTouchEvents(TouchAction touchAction)
         {
-            EventManager.OnDown += touchAction.OnDown;
-            EventManager.OnDrag += touchAction.OnDrag;
-            EventManager.OnUp += touchAction.OnUp;
+            CentralEventManager.OnDown += touchAction.OnDown;
+            CentralEventManager.OnDrag += touchAction.OnDrag;
+            CentralEventManager.OnUp += touchAction.OnUp;
         }
 
         private void UnsubscribeTouchEvents(TouchAction touchAction)
         {
-            EventManager.OnDown -= touchAction.OnDown;
-            EventManager.OnDrag -= touchAction.OnDrag;
-            EventManager.OnUp -= touchAction.OnUp;
+            CentralEventManager.OnDown -= touchAction.OnDown;
+            CentralEventManager.OnDrag -= touchAction.OnDrag;
+            CentralEventManager.OnUp -= touchAction.OnUp;
         }
     }
 

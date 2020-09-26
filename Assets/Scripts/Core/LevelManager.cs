@@ -29,12 +29,12 @@ namespace Rhodos.Core
 
         public override void SubscribeEvents()
         {
-            EventManager.OnReloadScene += ReloadScene;
+            CentralEventManager.OnReloadScene += ReloadScene;
         }
 
         public override void UnsubscribeEvents()
         {
-            EventManager.OnReloadScene -= ReloadScene;
+            CentralEventManager.OnReloadScene -= ReloadScene;
         }
 
         private void ReloadScene() => SceneManager.LoadScene("Game");

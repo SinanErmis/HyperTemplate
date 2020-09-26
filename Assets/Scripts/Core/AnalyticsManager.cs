@@ -16,16 +16,16 @@ namespace Rhodos.Core
 
         private void Awake()
         {
-            EventManager.OnReloadScene += ShowInterstitial;
+            CentralEventManager.OnReloadScene += ShowInterstitial;
 
-            EventManager.OnGameStart += (level, order) =>
+            CentralEventManager.OnGameStart += (level, order) =>
             {
                 SendEvent($"Level_start_{order}");
                 _lastPlayedLevelOrder = order;
             };
 
-            EventManager.OnSuccess += (level, order) => SendEvent($"Level_succeed_{order}");
-            EventManager.OnUnsuccess += (level, order) => SendEvent($"Level_failed_{order}");
+            CentralEventManager.OnSuccess += (level, order) => SendEvent($"Level_succeed_{order}");
+            CentralEventManager.OnUnsuccess += (level, order) => SendEvent($"Level_failed_{order}");
 
 
             if (instance == null)

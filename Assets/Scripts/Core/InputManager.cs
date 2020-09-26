@@ -7,15 +7,15 @@ namespace Rhodos.Core
         private bool _canTouch;
         public override void SubscribeEvents()
         {
-            EventManager.OnGameStart += DisallowTouch;
-            EventManager.OnSuccess += DisallowTouch;
-            EventManager.OnUnsuccess += DisallowTouch;
+            CentralEventManager.OnGameStart += DisallowTouch;
+            CentralEventManager.OnSuccess += DisallowTouch;
+            CentralEventManager.OnUnsuccess += DisallowTouch;
         }
         public override void UnsubscribeEvents()
         {
-            EventManager.OnGameStart -= AllowTouch;
-            EventManager.OnSuccess -= DisallowTouch;
-            EventManager.OnUnsuccess -= DisallowTouch;
+            CentralEventManager.OnGameStart -= AllowTouch;
+            CentralEventManager.OnSuccess -= DisallowTouch;
+            CentralEventManager.OnUnsuccess -= DisallowTouch;
         }
 
         private void AllowTouch(Level level, int order) => _canTouch = true;
@@ -25,13 +25,13 @@ namespace Rhodos.Core
             if(!_canTouch) return;
             
             if (Input.GetMouseButtonDown(0))
-                EventManager.TriggerOnDown();
+                CentralEventManager.TriggerOnDown();
             
             else if (Input.GetMouseButton(0))
-                EventManager.TriggerOnDrag();
+                CentralEventManager.TriggerOnDrag();
             
             else if (Input.GetMouseButtonUp(0))
-                EventManager.TriggerOnUp();
+                CentralEventManager.TriggerOnUp();
         }
     }
 }

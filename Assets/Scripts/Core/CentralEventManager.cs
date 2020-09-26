@@ -2,7 +2,7 @@
 
 namespace Rhodos.Core
 {
-    public class EventManager
+    public static class CentralEventManager
     {
         public static event Action OnDown;
         public static event Action OnDrag;
