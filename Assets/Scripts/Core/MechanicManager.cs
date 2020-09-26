@@ -2,12 +2,12 @@
 
 namespace Rhodos.Core
 {
-    public class TouchActionManager : MainComponent
+    public class MechanicManager : MainComponent
     {
         [SerializeField] private InputManager inputManager;
         
-        private static TouchAction _activeTouchAction;
-        private static TouchAction[] _touchActions;
+        private static Mechanic _activeMechanic;
+        private static Mechanic[] _mechanics;
 
         public override void SubscribeEvents()
         {
@@ -21,7 +21,7 @@ namespace Rhodos.Core
 
         public override void PreAwake()
         {
-            _touchActions = new TouchAction[0]
+            _mechanics = new Mechanic[0]
             {
                 //TODO add foreach touch action to here (2)
                 //for example:
@@ -31,34 +31,34 @@ namespace Rhodos.Core
             };
         }
 
-        private void ChangeEventsWithEnum(TouchActionTypes touchActionType)
+        private void ChangeEventsWithEnum(MechanicType mechanicType)
         {
-            ChangeEvents(_touchActions[(int) touchActionType]);
+            ChangeEvents(_mechanics[(int) mechanicType]);
         }
 
-        private void ChangeEvents(TouchAction touchAction)
+        private void ChangeEvents(Mechanic mechanic)
         {
-            if (_activeTouchAction != null) UnsubscribeTouchEvents(_activeTouchAction);
-            SubscribeTouchEvents(touchAction);
-            _activeTouchAction = touchAction;
+            if (_activeMechanic != null) UnsubscribeTouchEvents(_activeMechanic);
+            SubscribeTouchEvents(mechanic);
+            _activeMechanic = mechanic;
         }
 
-        private void SubscribeTouchEvents(TouchAction touchAction)
+        private void SubscribeTouchEvents(Mechanic mechanic)
         {
-            inputManager.OnDown += touchAction.OnDown;
-            inputManager.OnDrag += touchAction.OnDrag;
-            inputManager.OnUp += touchAction.OnUp;
+            inputManager.OnDown += mechanic.OnDown;
+            inputManager.OnDrag += mechanic.OnDrag;
+            inputManager.OnUp += mechanic.OnUp;
         }
 
-        private void UnsubscribeTouchEvents(TouchAction touchAction)
+        private void UnsubscribeTouchEvents(Mechanic mechanic)
         {
-            inputManager.OnDown -= touchAction.OnDown;
-            inputManager.OnDrag -= touchAction.OnDrag;
-            inputManager.OnUp -= touchAction.OnUp;
+            inputManager.OnDown -= mechanic.OnDown;
+            inputManager.OnDrag -= mechanic.OnDrag;
+            inputManager.OnUp -= mechanic.OnUp;
         }
     }
 
-    public abstract class TouchAction
+    public abstract class Mechanic
     {
         public abstract void OnDown();
         public abstract void OnDrag();
@@ -68,7 +68,7 @@ namespace Rhodos.Core
     /// <summary>
     /// Stores touch action types for making easier both level creating and activating different touch actions.
     /// </summary>
-    public enum TouchActionTypes
+    public enum MechanicType
     {
         //TODO add touch actions here (1)
     }
