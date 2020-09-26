@@ -1,4 +1,5 @@
-﻿using Rhodos.Core;
+﻿using System.Collections;
+using Rhodos.Core;
 using DG.Tweening;
 using UnityEngine;
 
@@ -13,22 +14,17 @@ namespace Rhodos.UI
         public override void UnsubscribeEvents() => EventManager.OnUnsuccess -= ActivateOnUnsuccess;
         private void ActivateOnUnsuccess(Level level, int order) => Activate();
 
-        public override Sequence PlayInAnimation()
+        public override IEnumerator PlayInAnimation()
         {
             chest.Init(SaveLoadManager.GetChestProgress());
-            Sequence sequence = DOTween.Sequence();
-            sequence.PrependCallback(() =>
-            {
-                gameObject.SetActive(true);
-            });
-            return sequence;
+            gameObject.SetActive(true);
+            yield break;
         }
 
-        public override Sequence PlayOutAnimation()
+        public override IEnumerator PlayOutAnimation()
         {
-            Sequence sequence = DOTween.Sequence();
-            sequence.AppendCallback((() => gameObject.SetActive(false)));
-            return sequence;
+            gameObject.SetActive(true);
+            yield break;
         }
     }
 }
