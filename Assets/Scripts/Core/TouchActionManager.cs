@@ -1,7 +1,11 @@
-﻿namespace Rhodos.Core
+﻿using UnityEngine;
+
+namespace Rhodos.Core
 {
     public class TouchActionManager : MainComponent
     {
+        [SerializeField] private InputManager inputManager;
+        
         private static TouchAction _activeTouchAction;
         private static TouchAction[] _touchActions;
 
@@ -41,16 +45,16 @@
 
         private void SubscribeTouchEvents(TouchAction touchAction)
         {
-            CentralEventManager.OnDown += touchAction.OnDown;
-            CentralEventManager.OnDrag += touchAction.OnDrag;
-            CentralEventManager.OnUp += touchAction.OnUp;
+            inputManager.OnDown += touchAction.OnDown;
+            inputManager.OnDrag += touchAction.OnDrag;
+            inputManager.OnUp += touchAction.OnUp;
         }
 
         private void UnsubscribeTouchEvents(TouchAction touchAction)
         {
-            CentralEventManager.OnDown -= touchAction.OnDown;
-            CentralEventManager.OnDrag -= touchAction.OnDrag;
-            CentralEventManager.OnUp -= touchAction.OnUp;
+            inputManager.OnDown -= touchAction.OnDown;
+            inputManager.OnDrag -= touchAction.OnDrag;
+            inputManager.OnUp -= touchAction.OnUp;
         }
     }
 
