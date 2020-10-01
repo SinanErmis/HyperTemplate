@@ -9,8 +9,8 @@ namespace Rhodos.UI
         [SerializeField] private Chest chest;
         //TODO chest initilization/opening changes foreach game.
         
-        public override void SubscribeEvents() => EventManager.OnUnsuccess += ActivateOnUnsuccess;
-        public override void UnsubscribeEvents() => EventManager.OnUnsuccess -= ActivateOnUnsuccess;
+        public override void SubscribeEvents() => CentralEventManager.OnUnsuccess += ActivateOnUnsuccess;
+        public override void UnsubscribeEvents() => CentralEventManager.OnUnsuccess -= ActivateOnUnsuccess;
         private void ActivateOnUnsuccess(Level level, int order) => Activate();
 
         public override Sequence PlayInAnimation()

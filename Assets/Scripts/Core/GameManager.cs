@@ -10,7 +10,7 @@ namespace Rhodos.Core
 
         private void Awake()
         {
-            EventManager.OnReloadScene += UnsubscribeAllEvents;
+            CentralEventManager.OnReloadScene += UnsubscribeAllEvents;
             
             foreach (var mainComponent in mainComponents)
                 mainComponent.SubscribeEvents();
@@ -29,7 +29,7 @@ namespace Rhodos.Core
         {
             foreach (var mainComponent in mainComponents)
                 mainComponent.UnsubscribeEvents();
-            EventManager.OnReloadScene -= UnsubscribeAllEvents;
+            CentralEventManager.OnReloadScene -= UnsubscribeAllEvents;
         }
     }
 

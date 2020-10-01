@@ -1,21 +1,32 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Rhodos.Core
 {
     public class InputManager : MainComponent
     {
         private bool _canTouch;
+
+        #region Events
+        public event Action OnDown;
+        public event Action OnDrag;
+        public event Action OnUp;
+        public void TriggerOnDown() => OnDown?.Invoke();
+        public void TriggerOnDrag() => OnDrag?.Invoke();
+        public void TriggerOnUp() => OnUp?.Invoke();
+        #endregion
+        
         public override void SubscribeEvents()
         {
-            EventManager.OnGameStart += DisallowTouch;
-            EventManager.OnSuccess += DisallowTouch;
-            EventManager.OnUnsuccess += DisallowTouch;
+            CentralEventManager.OnGameStart += DisallowTouch;
+            CentralEventManager.OnSuccess += DisallowTouch;
+            CentralEventManager.OnUnsuccess += DisallowTouch;
         }
         public override void UnsubscribeEvents()
         {
-            EventManager.OnGameStart -= AllowTouch;
-            EventManager.OnSuccess -= DisallowTouch;
-            EventManager.OnUnsuccess -= DisallowTouch;
+            CentralEventManager.OnGameStart -= AllowTouch;
+            CentralEventManager.OnSuccess -= DisallowTouch;
+            CentralEventManager.OnUnsuccess -= DisallowTouch;
         }
 
         private void AllowTouch(Level level, int order) => _canTouch = true;
@@ -25,13 +36,13 @@ namespace Rhodos.Core
             if(!_canTouch) return;
             
             if (Input.GetMouseButtonDown(0))
-                EventManager.TriggerOnDown();
+                TriggerOnDown();
             
             else if (Input.GetMouseButton(0))
-                EventManager.TriggerOnDrag();
+                TriggerOnDrag();
             
             else if (Input.GetMouseButtonUp(0))
-                EventManager.TriggerOnUp();
+                TriggerOnUp();
         }
     }
 }
