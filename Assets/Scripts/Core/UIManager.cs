@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using DG.Tweening;
+using MyBox;
 using UnityEngine;
 using UnityEngine.UI;
 using Rhodos.UI;
@@ -34,20 +36,21 @@ namespace Rhodos.Core
                 uiScreen.OnStart();
         }
 
-        public static void ChangeUI(UIScreen uiScreen)
+        public static IEnumerator ChangeUI(UIScreen uiScreen)
         {
             if (_activeScreen == null)
             {
-                Debug.Log("<color=green>Giren UI: </color>" + uiScreen.name);
+                Debug.Log("Screen In".Colored(Colors.green) + uiScreen.name);
                 uiScreen.PlayInAnimation();
             }
             else
             {
-                Debug.Log("<color=red>Çıkan UI: </color>" + _activeScreen + "\n<color=green>Giren UI: </color>" +
-                          uiScreen);
-                _activeScreen.PlayOutAnimation().OnComplete(() => uiScreen.PlayInAnimation());
+                Debug.Log("Screen OUT".Colored(Colors.red) + _activeScreen +
+                          "\nScreen In".Colored(Colors.green) + uiScreen);
+                
+                yield return uiScreen.StartCoroutine(_activeScreen.PlayOutAnimation())
+                                     .StartNext(uiScreen.PlayInAnimation());
             }
-
             _activeScreen = uiScreen;
         }
 

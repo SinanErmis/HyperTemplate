@@ -1,21 +1,20 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 
 namespace Rhodos.UI
 {
     public class InGame : UIScreen
     {
-        public override Sequence PlayInAnimation()
+        public override IEnumerator PlayInAnimation()
         {
-            Sequence sequence = DOTween.Sequence();
-            sequence.PrependCallback((() => gameObject.SetActive(true)));
-            return sequence;
+            gameObject.SetActive(true);
+            yield break;
         }
 
-        public override Sequence PlayOutAnimation()
+        public override IEnumerator PlayOutAnimation()
         {
-            Sequence sequence = DOTween.Sequence();
-            sequence.AppendCallback((() => gameObject.SetActive(false)));
-            return sequence;
+            gameObject.SetActive(true);
+            yield break;
         }
     }
 }

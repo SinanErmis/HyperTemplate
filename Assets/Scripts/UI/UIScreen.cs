@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using Rhodos.Core;
@@ -23,11 +24,11 @@ namespace Rhodos.UI
         {
         }
         
-        public abstract Sequence PlayInAnimation();
+        public abstract IEnumerator PlayInAnimation();
         
-        public abstract Sequence PlayOutAnimation();
+        public abstract IEnumerator PlayOutAnimation();
 
-        [ContextMenu("Activate this")]
+        [ContextMenu("Activate This")]
         public void Activate() => UIManager.ChangeUI(this);
 
     }

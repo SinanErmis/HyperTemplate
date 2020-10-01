@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Rhodos.Core;
@@ -22,7 +23,7 @@ namespace Rhodos.UI
             levelCounter.text = "Level " + (SaveLoadManager.GetLevel() + 1);
         }
 
-        public override Sequence PlayInAnimation()
+        public override IEnumerator PlayInAnimation()
         {
             RectTransform t_levelCounter = levelCounter.GetComponent<RectTransform>();
             Vector2 oldPosOfLevelCounter = t_levelCounter.anchoredPosition;
@@ -30,20 +31,16 @@ namespace Rhodos.UI
             RectTransform t_playButton = playButton.GetComponent<RectTransform>();
             Vector2 oldPosOfPlayButton = t_playButton.anchoredPosition;
 
-            Sequence sequence = DOTween.Sequence();
-            sequence.PrependCallback((() => gameObject.SetActive(true)))
-                    .Append(t_levelCounter.DOAnchorPos(oldPosOfLevelCounter, 1f).From(Vector2.up * 100f)
-                                          .SetEase(Ease.OutBack).OnStart(() =>
-                                              t_playButton
-                                                  .DOAnchorPos(oldPosOfPlayButton, 1f).From(Vector2.down * 100f)));
-            return sequence;
+            gameObject.SetActive(true);
+            t_levelCounter.DOAnchorPos(oldPosOfLevelCounter, 1f).From(Vector2.up * 100f).SetEase(Ease.OutBack);
+            t_playButton.DOAnchorPos(oldPosOfPlayButton, 1f).From(Vector2.down * 100f);
+            yield return new WaitForSecondsRealtime(1f);
         }
 
-        public override Sequence PlayOutAnimation()
+        public override IEnumerator PlayOutAnimation()
         {
-            Sequence sequence = DOTween.Sequence();
-            sequence.AppendCallback((() => gameObject.SetActive(false)));
-            return sequence;
+            gameObject.SetActive(false);
+            yield break;
         }
     }
 }
