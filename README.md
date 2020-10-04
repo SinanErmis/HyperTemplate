@@ -10,4 +10,4 @@
 - For adding a new mechanic, create a new class inherits from Mechanic class.
 - There's a singleton AnalyticsManager class for easing getting analytics process.
 - There are some utilies like ready to use pools and reward chest logic.
-- DOTween and MyBox is ready to go.
+- DOTween and MyBox are ready to go.
