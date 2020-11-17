@@ -3,6 +3,14 @@
   <component name="ContentModelUserStore">
     <attachedFolders />
     <explicitIncludes>
+      <Path>Library/PackageCache/com.mambojambostudios.unity-atoms-base-atoms@4.3.0</Path>
+      <Path>Library/PackageCache/com.mambojambostudios.unity-atoms-core@4.3.0</Path>
+      <Path>Library/PackageCache/com.mambojambostudios.unity-atoms-fsm@4.3.0</Path>
+      <Path>Library/PackageCache/com.mambojambostudios.unity-atoms-mobile@4.3.0</Path>
+      <Path>Library/PackageCache/com.mambojambostudios.unity-atoms-mono-hooks@4.3.0</Path>
+      <Path>Library/PackageCache/com.mambojambostudios.unity-atoms-scene-mgmt@4.3.0</Path>
+      <Path>Library/PackageCache/com.mambojambostudios.unity-atoms-tags@4.3.0</Path>
+      <Path>Library/PackageCache/com.mambojambostudios.unity-atoms-ui@4.3.0</Path>
       <Path>Library/PackageCache/com.unity.collab-proxy@1.3.8</Path>
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.ide.rider@1.2.1</Path>
