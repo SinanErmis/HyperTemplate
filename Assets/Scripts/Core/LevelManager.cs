@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace Rhodos.Core
 {
-    public class LevelManager : MainComponent
+    public class LevelManager : MonoBehaviour
     {
         [SerializeField] private Level[] allLevels;
         [SerializeField] private Level testLevel;
@@ -11,7 +11,7 @@ namespace Rhodos.Core
 
         public static Level ActiveLevel { get; private set; }
 
-        public override void LateAwake()
+        private void Awake()
         {
             ActiveLevel = CreateLevel();
         }
@@ -27,17 +27,7 @@ namespace Rhodos.Core
             return level;
         }
 
-        public override void SubscribeEvents()
-        {
-            CentralEventManager.OnReloadScene += ReloadScene;
-        }
-
-        public override void UnsubscribeEvents()
-        {
-            CentralEventManager.OnReloadScene -= ReloadScene;
-        }
-
-        private void ReloadScene() => SceneManager.LoadScene("Game");
+        private void RestartScene() => SceneManager.LoadScene("Game");
     }
 
 }

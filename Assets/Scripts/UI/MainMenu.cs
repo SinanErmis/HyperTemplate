@@ -11,7 +11,7 @@ namespace Rhodos.UI
         [SerializeField] private Text levelCounter;
         [SerializeField] private Button playButton;
 
-        public override void OnStart()
+        public void Start()
         {
             UpdateLevelCounter();
             Activate();

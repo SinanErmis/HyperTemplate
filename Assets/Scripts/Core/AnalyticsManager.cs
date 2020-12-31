@@ -3,9 +3,14 @@ using UnityEngine;
 
 namespace Rhodos.Core
 {
+
+    // TODO: REWORK NEEDED!!!!!!!!!!!!!!
+    // Rearrange event system
+    // Set constants for player prefs and sdk event keys
+    // Maybe make that class scriptable object(it will continue to live during game runtime, and no need for singleton)
     /// <summary>
     /// This class for can be used for send analytics events to the server. Thanks to the event driven design, it is easy to
-    /// extend and implement different SDK's 
+    /// extend and implement different SDK's
     /// </summary>
     public class AnalyticsManager : MonoBehaviour
     {
@@ -16,7 +21,8 @@ namespace Rhodos.Core
 
         private void Awake()
         {
-            CentralEventManager.OnReloadScene += ShowInterstitial;
+            //TODO: Rearrange
+            /*CentralEventManager.OnReloadScene += ShowInterstitial;
 
             CentralEventManager.OnGameStart += (level, order) =>
             {
@@ -26,7 +32,7 @@ namespace Rhodos.Core
 
             CentralEventManager.OnSuccess += (level, order) => SendEvent($"Level_succeed_{order}");
             CentralEventManager.OnUnsuccess += (level, order) => SendEvent($"Level_failed_{order}");
-
+            */
 
             if (instance == null)
                 Init();

@@ -28,6 +28,10 @@ namespace Rhodos.UI
                                             .SetEase(Ease.Linear);
         }
 
+        public void Init()
+        {
+            Init(GetChestProgress());
+        }
         public void Init(float startingFillAmount)
         {
             chestImage.fillAmount = startingFillAmount;
@@ -54,13 +58,13 @@ namespace Rhodos.UI
                 {
                     yield return chestImage.DOFillAmount(chestImage.fillAmount + addition, Math.Abs(addition))
                                            .OnUpdate(() => fillAmountIndicator.text = "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
-                                           .OnStart(()=>SaveLoadManager.IncreaseChestProgress(addition));
+                                           .OnStart(()=>IncreaseChestProgress(addition));
                 }
                 else if (isEqual)
                 {
                     yield return chestImage.DOFillAmount(1f, Math.Abs(addition))
                                            .OnUpdate(() => fillAmountIndicator.text = "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
-                                           .OnStart(()=>SaveLoadManager.IncreaseChestProgress(addition));
+                                           .OnStart(()=>IncreaseChestProgress(addition));
                     _scaleAnimation.Pause();
 
                     yield return StartCoroutine(OpenChest());
@@ -77,7 +81,7 @@ namespace Rhodos.UI
 
                     yield return chestImage.DOFillAmount(firstStep, firstStep)
                                            .OnUpdate(() => fillAmountIndicator.text = "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
-                                           .OnStart(()=>SaveLoadManager.IncreaseChestProgress(addition));
+                                           .OnStart(() => IncreaseChestProgress(addition));
                     _scaleAnimation.Pause();
 
                     yield return StartCoroutine(OpenChest());
@@ -86,7 +90,7 @@ namespace Rhodos.UI
                     fillAmountIndicator.text = "%0";
                     yield return chestImage.DOFillAmount(secondStep, secondStep)
                                            .OnUpdate(() => fillAmountIndicator.text = "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
-                                           .OnStart(() => SaveLoadManager.IncreaseChestProgress(addition));
+                                           .OnStart(() => IncreaseChestProgress(addition));
                     _scaleAnimation.Play();
                 }
             }
@@ -100,5 +104,11 @@ namespace Rhodos.UI
             //TODO chest opening anim
             Debug.Log("Chest Opened");
         }
+
+        private const string CHEST_KEY = "ChestProgress";
+        public static float GetChestProgress() => PlayerPrefs.GetFloat(CHEST_KEY, 0f);
+        public static void IncreaseChestProgress(float amount) =>
+            PlayerPrefs.SetFloat(CHEST_KEY, GetChestProgress() + amount);
+        public static void SetChestProgress(float amount) => PlayerPrefs.SetFloat(CHEST_KEY, amount);
     }
 }

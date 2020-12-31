@@ -1,39 +1,28 @@
 ﻿using UnityEngine;
+using Rhodos.Core.Mechanics;
 
 namespace Rhodos.Core
 {
-    public class MechanicManager : MainComponent
+    public class MechanicManager : MonoBehaviour
     {
         [SerializeField] private InputManager inputManager;
+        private static MechanicBase _activeMechanic;
         
-        private static Mechanic _activeMechanic;
-
-        public override void SubscribeEvents()
-        {
-            CentralEventManager.OnMechanicChange += ChangeEvents;
-        }
-
-        public override void UnsubscribeEvents()
-        {
-            CentralEventManager.OnMechanicChange -= ChangeEvents;
-        }
-
-
-        private void ChangeEvents(Mechanic mechanic)
+        private void ChangeEvents(MechanicBase mechanic)
         {
             if (_activeMechanic != null) UnsubscribeTouchEvents(_activeMechanic);
             SubscribeTouchEvents(mechanic);
             _activeMechanic = mechanic;
         }
 
-        private void SubscribeTouchEvents(Mechanic mechanic)
+        private void SubscribeTouchEvents(MechanicBase mechanic)
         {
             inputManager.OnDown += mechanic.OnDown;
             inputManager.OnDrag += mechanic.OnDrag;
             inputManager.OnUp += mechanic.OnUp;
         }
 
-        private void UnsubscribeTouchEvents(Mechanic mechanic)
+        private void UnsubscribeTouchEvents(MechanicBase mechanic)
         {
             inputManager.OnDown -= mechanic.OnDown;
             inputManager.OnDrag -= mechanic.OnDrag;

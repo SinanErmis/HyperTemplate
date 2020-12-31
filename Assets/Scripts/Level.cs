@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-using MyBox;
-namespace Rhodos.Core
+using Rhodos.Core.Mechanics;
+
+namespace Rhodos
 {
     public class Level : MonoBehaviour
     {
-        [SerializeField] private Mechanic[] levelMechanics;
+        [SerializeField] private MechanicBase[] levelMechanics;
     }
 }

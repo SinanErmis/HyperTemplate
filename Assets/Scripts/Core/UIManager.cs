@@ -8,32 +8,14 @@ using Rhodos.UI;
 
 namespace Rhodos.Core
 {
-    public class UIManager : MainComponent
+    public class UIManager : MonoBehaviour
     {
         [SerializeField] private UIScreen[] uiScreens;
         private static UIScreen _activeScreen;
 
-        public override void SubscribeEvents()
-        {
-            foreach (var uiScreen in uiScreens)
-                uiScreen.SubscribeEvents();
-        }
-
-        public override void UnsubscribeEvents()
-        {
-            foreach (var uiScreen in uiScreens)
-                uiScreen.UnsubscribeEvents();
-        }
-
-        public override void OnAwake()
+        private void Awake()
         {
             AdjustCanvasRatio();
-        }
-
-        private void Start()
-        {
-            foreach (var uiScreen in uiScreens)
-                uiScreen.OnStart();
         }
 
         public static IEnumerator ChangeUI(UIScreen uiScreen)
@@ -41,7 +23,7 @@ namespace Rhodos.Core
             if (_activeScreen == null)
             {
                 Debug.Log("Screen In".Colored(Colors.green) + uiScreen.name);
-                uiScreen.PlayInAnimation();
+                uiScreen.PlayInAnimation().StartCoroutine();
             }
             else
             {
