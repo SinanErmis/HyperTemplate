@@ -10,12 +10,30 @@ namespace Rhodos.Core
         [SerializeField] private Transform levelHolder;
 
         public static Level ActiveLevel { get; private set; }
-
-        private void Awake()
+        
+        private void Start()
         {
             ActiveLevel = CreateLevel();
+            EventManager.Instance.TriggerOnSceneCreated(new LevelArgs(ActiveLevel, SaveLoadManager.GetLevel()));
+            EventManager.Instance.TriggerOnMechanicChange(ActiveLevel.ActiveMechanic);
+
         }
 
+        //subs to on mechanic success
+        public void NextMechanicOrNextLevel()
+        {
+            ActiveLevel.IncreaseMechanicIndex();
+
+            if (ActiveLevel.IsEnded)
+            {
+                EventManager.Instance.TriggerOnLevelSuccess(new LevelArgs(ActiveLevel, SaveLoadManager.GetLevel()));
+            }
+            else
+            {
+                EventManager.Instance.TriggerOnMechanicChange(ActiveLevel.ActiveMechanic);
+            }
+        }
+        
         /// <summary>
         /// Creates test level if exists, otherwise creates next level.
         /// </summary>
@@ -27,7 +45,7 @@ namespace Rhodos.Core
             return level;
         }
 
-        private void RestartScene() => SceneManager.LoadScene("Game");
+        public void RestartScene() => SceneManager.LoadScene("Game");
     }
 
 }

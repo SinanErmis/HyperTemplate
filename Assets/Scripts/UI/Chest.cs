@@ -16,8 +16,8 @@ namespace Rhodos.UI
         [SerializeField] private Image chestImage;
         [SerializeField] private RectTransform chestTransform;
         [SerializeField] private RectTransform background;
-        private Tween _scaleAnimation;
         [SerializeField] private Text fillAmountIndicator;
+        private Tween _scaleAnimation;
 
         private void Awake()
         {
@@ -37,62 +37,57 @@ namespace Rhodos.UI
             chestImage.fillAmount = startingFillAmount;
             fillAmountIndicator.text = "%" + Math.Round(startingFillAmount * 100f);
         }
-
-        #if UNITY_EDITOR
-        private void Update() //For debugging easily
+        
+        public IEnumerator Fill(float addition)
         {
-            if (Input.GetMouseButton(0)) Fill(0.2f * Time.deltaTime);
-            else if (Input.GetMouseButton(1)) Fill(-0.2f * Time.deltaTime);
-        }
-        #endif
+            bool isEqual = Mathf.RoundToInt(100f * (chestImage.fillAmount + addition)) == 100;
 
-        public Coroutine Fill(float addition)
-        {
-            return StartCoroutine(CoFill());
-
-            IEnumerator CoFill()
+            if (chestImage.fillAmount + addition < 1 && !isEqual)
             {
-                bool isEqual = Mathf.RoundToInt(100f * (chestImage.fillAmount + addition)) == 100;
-                
-                if (chestImage.fillAmount + addition < 1 && !isEqual)
-                {
-                    yield return chestImage.DOFillAmount(chestImage.fillAmount + addition, Math.Abs(addition))
-                                           .OnUpdate(() => fillAmountIndicator.text = "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
-                                           .OnStart(()=>IncreaseChestProgress(addition));
-                }
-                else if (isEqual)
-                {
-                    yield return chestImage.DOFillAmount(1f, Math.Abs(addition))
-                                           .OnUpdate(() => fillAmountIndicator.text = "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
-                                           .OnStart(()=>IncreaseChestProgress(addition));
-                    _scaleAnimation.Pause();
+                yield return chestImage.DOFillAmount(chestImage.fillAmount + addition, Math.Abs(addition))
+                                       .OnUpdate(() =>
+                                           fillAmountIndicator.text =
+                                               "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
+                                       .OnStart(() => IncreaseChestProgress(addition));
+            }
+            else if (isEqual)
+            {
+                yield return chestImage.DOFillAmount(1f, Math.Abs(addition))
+                                       .OnUpdate(() =>
+                                           fillAmountIndicator.text =
+                                               "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
+                                       .OnStart(() => IncreaseChestProgress(addition));
+                _scaleAnimation.Pause();
 
-                    yield return StartCoroutine(OpenChest());
+                yield return StartCoroutine(OpenChest());
 
-                    fillAmountIndicator.text = "%0";
-                    chestImage.fillAmount = 0f;
-                    
-                    _scaleAnimation.Play();
-                }
-                else
-                {
-                    float firstStep = 1f - chestImage.fillAmount;
-                    float secondStep = addition - firstStep;
+                fillAmountIndicator.text = "%0";
+                chestImage.fillAmount = 0f;
 
-                    yield return chestImage.DOFillAmount(firstStep, firstStep)
-                                           .OnUpdate(() => fillAmountIndicator.text = "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
-                                           .OnStart(() => IncreaseChestProgress(addition));
-                    _scaleAnimation.Pause();
+                _scaleAnimation.Play();
+            }
+            else
+            {
+                float firstStep = 1f - chestImage.fillAmount;
+                float secondStep = addition - firstStep;
 
-                    yield return StartCoroutine(OpenChest());
+                yield return chestImage.DOFillAmount(firstStep, firstStep)
+                                       .OnUpdate(() =>
+                                           fillAmountIndicator.text =
+                                               "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
+                                       .OnStart(() => IncreaseChestProgress(addition));
+                _scaleAnimation.Pause();
 
-                    chestImage.fillAmount = 0f;
-                    fillAmountIndicator.text = "%0";
-                    yield return chestImage.DOFillAmount(secondStep, secondStep)
-                                           .OnUpdate(() => fillAmountIndicator.text = "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
-                                           .OnStart(() => IncreaseChestProgress(addition));
-                    _scaleAnimation.Play();
-                }
+                yield return StartCoroutine(OpenChest());
+
+                chestImage.fillAmount = 0f;
+                fillAmountIndicator.text = "%0";
+                yield return chestImage.DOFillAmount(secondStep, secondStep)
+                                       .OnUpdate(() =>
+                                           fillAmountIndicator.text =
+                                               "%" + Mathf.RoundToInt(chestImage.fillAmount * 100f))
+                                       .OnStart(() => IncreaseChestProgress(addition));
+                _scaleAnimation.Play();
             }
         }
 

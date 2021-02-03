@@ -22,13 +22,13 @@ namespace Rhodos.Core
         {
             if (_activeScreen == null)
             {
-                Debug.Log("Screen In".Colored(Colors.green) + uiScreen.name);
+                Debug.Log("Screen In: ".Colored(Colors.green) + uiScreen.name);
                 uiScreen.PlayInAnimation().StartCoroutine();
             }
             else
             {
-                Debug.Log("Screen OUT".Colored(Colors.red) + _activeScreen +
-                          "\nScreen In".Colored(Colors.green) + uiScreen);
+                Debug.Log("Screen Out: ".Colored(Colors.red) + _activeScreen +
+                          "\nScreen In: ".Colored(Colors.green) + uiScreen);
                 
                 yield return uiScreen.StartCoroutine(_activeScreen.PlayOutAnimation())
                                      .StartNext(uiScreen.PlayInAnimation());

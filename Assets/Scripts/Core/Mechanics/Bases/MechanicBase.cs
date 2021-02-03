@@ -1,16 +1,41 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Rhodos.Core;
 using UnityEngine;
 
-namespace Rhodos.Core.Mechanics
+namespace Rhodos.Core.Mechanics.Bases
 {
     public abstract class MechanicBase : MonoBehaviour
     {
+        public bool canPlay;
+        [field:SerializeField] public bool HasATutorialScreen { get; private set; }
+        /// <summary>
+        /// If you want to use tutorial screen on that mechanic create it's arguments in the OnActivate.
+        /// </summary>
+        public TutorialArgs TutorialArgs { get; protected set; }
+        public virtual void OnActivate()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public virtual void OnDisactivate()
+        {
+            gameObject.SetActive(false);
+        }
         public abstract void OnDown();
         public abstract void OnDrag();
         public abstract void OnUp();
-        
+
         #region Predefined Ray Methods
 
+        protected bool IsRayToPositionHitAnyObjectInLayer(Vector3 position, LayerMask layer)
+        {
+            Vector3 screenPoint = CameraManager.Camera.WorldToScreenPoint(position); 
+            Ray ray = CameraManager.Camera.ScreenPointToRay(screenPoint);
+            return Physics.Raycast(ray: ray, layerMask: layer, maxDistance: 100f);
+        }
+        //new 
+        
         protected Vector3 GetWorldPositionOnPlaneY(float y)
         {
             Vector3 camPos = CameraManager.Camera.transform.position;
