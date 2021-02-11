@@ -1585,7 +1585,7 @@ GameObject:
   - component: {fileID: 1519357486}
   - component: {fileID: 1519357490}
   m_Layer: 5
-  m_Name: Unsucess
+  m_Name: Fail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1683,7 +1683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9497e4132ae44edaae335e2d0ea33498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chest: {fileID: 2138426537}
 --- !u!1 &1524039964
 GameObject:
   m_ObjectHideFlags: 0
@@ -2369,15 +2368,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2066912114}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2138426537 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1667368126590535466, guid: be50a13a992cc8c469e9bf3ee59f098e,
-    type: 3}
-  m_PrefabInstance: {fileID: 950513284}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 688c4b959be142d1b79dd0a6d0d36cf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -5,21 +5,17 @@ using UnityEngine;
 
 namespace Rhodos.UI
 {
-    public class UnsuccessScreen : UIScreen
+    public class FailScreen : UIScreen
     {
-        [SerializeField] private Chest chest;
-        //TODO chest initilization/opening changes foreach game.
-        
         public override IEnumerator PlayInAnimation()
         {
-            chest.Init();
             gameObject.SetActive(true);
             yield break;
         }
 
         public override IEnumerator PlayOutAnimation()
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
             yield break;
         }
     }
