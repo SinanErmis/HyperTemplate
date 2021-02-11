@@ -16,9 +16,9 @@ namespace Rhodos.Core.Mechanics.Bases
         public TutorialArgs TutorialArgs { get; protected set; }
         public virtual IEnumerator OnActivate() { yield break;}
         public virtual void OnDeactivate() { }
-        public abstract void OnDown();
-        public abstract void OnDrag();
-        public abstract void OnUp();
+        public virtual void OnDown() { }
+        public virtual  void OnDrag() { }
+        public virtual  void OnUp() { }
 
         #region Predefined Ray Methods
 
