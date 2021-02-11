@@ -2,6 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 using Rhodos.Core;
+using Rhodos.Toolkit;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,7 @@ namespace Rhodos.UI
         
         [SerializeField] private Text instruction;
         private RectTransform _instructionRect;
-        [field : SerializeField] public AnimationPositions InstructionPositions { get; private set; }
+        [field : SerializeField] public MinMaxPair<Vector2> InstructionPositions { get; private set; }
         
         [field : SerializeField] public RectTransform Image { get; private set; }
 
@@ -59,7 +60,7 @@ namespace Rhodos.UI
                               " before it initialized. Please initialize it first!"), gameObject);
             gameObject.SetActive(true);
             _handAnimation.Play().SetLoops(-1, LoopType.Yoyo);
-            yield return _instructionRect.DOAnchorPos(InstructionPositions.inPlace, 1f).WaitForCompletion();
+            yield return _instructionRect.DOAnchorPos(InstructionPositions.max, 1f).WaitForCompletion();
         }
 
         public override IEnumerator PlayOutAnimation()
@@ -68,7 +69,7 @@ namespace Rhodos.UI
                 new Exception("You tried to deactivate tutorial screen at " + gameObject.name +
                               " before it initialized. Please initialize it first!"), gameObject);
             _handAnimation?.Kill();
-            yield return _instructionRect.DOAnchorPos(InstructionPositions.outPlace, 1f).WaitForCompletion();
+            yield return _instructionRect.DOAnchorPos(InstructionPositions.min, 1f).WaitForCompletion();
             gameObject.SetActive(false);
         }
     }
