@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Rhodos.Core;
 using UnityEngine;
@@ -13,15 +14,8 @@ namespace Rhodos.Core.Mechanics.Bases
         /// If you want to use tutorial screen on that mechanic create it's arguments in the OnActivate.
         /// </summary>
         public TutorialArgs TutorialArgs { get; protected set; }
-        public virtual void OnActivate()
-        {
-            gameObject.SetActive(true);
-        }
-
-        public virtual void OnDisactivate()
-        {
-            gameObject.SetActive(false);
-        }
+        public virtual IEnumerator OnActivate() { yield break;}
+        public virtual void OnDeactivate() { }
         public abstract void OnDown();
         public abstract void OnDrag();
         public abstract void OnUp();
@@ -239,5 +233,6 @@ namespace Rhodos.Core.Mechanics.Bases
 
         #endregion
 
+        public virtual void OnFail() {}
     }
 }

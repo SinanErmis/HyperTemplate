@@ -19,29 +19,35 @@ namespace Rhodos.Core
         public void TriggerOnUp() => OnUp?.Invoke();
         #endregion
         
-        //subs to on mechanic change
-        public void ChangeEvents(MechanicBase mechanic)
+        public void CallMechanicActivateSequence(MechanicBase mechanicBase)
         {
-            if (activeMechanic != null)
-            {
-                UnsubscribeTouchEvents(activeMechanic);
-                activeMechanic.OnDisactivate();
-            }
-            activeMechanic = mechanic;
-            SubscribeTouchEvents(activeMechanic);
-            activeMechanic.OnActivate();
-            
+            mechanicBase.StartCoroutine(mechanicBase.OnActivate());
+        }
+        public void CallMechanicDeactivate(MechanicBase mechanicBase)
+        {
+            mechanicBase.OnDeactivate();
+        }        
+        public void CallMechanicFail(MechanicBase mechanicBase)
+        {
+            mechanicBase.OnFail();
         }
 
-        private void SubscribeTouchEvents(MechanicBase mechanic)
+        public void StartFirstMechanic(LevelArgs level)
         {
+            EventManager.Instance.OnMechanicStart(level.Level.ActiveMechanic);
+        }
+
+        public void SubscribeTouchEvents(MechanicBase mechanic)
+        {
+            activeMechanic = mechanic;
             OnDown += mechanic.OnDown;
             OnDrag += mechanic.OnDrag;
             OnUp += mechanic.OnUp;
         }
 
-        private void UnsubscribeTouchEvents(MechanicBase mechanic)
+        public void UnsubscribeTouchEvents(MechanicBase mechanic)
         {
+            activeMechanic = null;
             OnDown -= mechanic.OnDown;
             OnDrag -= mechanic.OnDrag;
             OnUp -= mechanic.OnUp;

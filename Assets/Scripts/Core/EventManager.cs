@@ -9,23 +9,25 @@ namespace Rhodos.Core
     /// </summary>
     public class EventManager : MonoBehaviourSingleton<EventManager>
     {
-        //todo rename game start scene start and unsuccess fail
-        public UnityEvent<LevelArgs> sceneCreated;
-        public UnityEvent<LevelArgs> gameStart;
-        public UnityEvent<LevelArgs> fail;
-        public UnityEvent<LevelArgs> levelSuccess;
-        public UnityEvent mechanicSuccess;
-        public UnityEvent reloadScene;
-        public UnityEvent<MechanicBase> mechanicChange;
+        public UnityEvent<LevelArgs>    sceneCreation;  //When scene is created with a particular level
+        public UnityEvent<LevelArgs>    gameStart;      //When game started with a particular level 
+        public UnityEvent<LevelArgs>    levelSuccess;   //When all mechanics in the level ends
+        
+        public UnityEvent<MechanicBase> mechanicStart;  //When a mechanic starts
+        public UnityEvent<MechanicBase> mechanicFail;   //When player fails
+        public UnityEvent<MechanicBase> mechanicSuccess;//When player succeeds
            
-        public void TriggerOnSceneCreated(LevelArgs levelArgs) => sceneCreated?.Invoke(levelArgs);
-        public void TriggerOnGameStart(LevelArgs levelArgs) => gameStart?.Invoke(levelArgs);
-        public void TriggerOnFail(LevelArgs levelArgs) => fail?.Invoke(levelArgs);
-        public void TriggerOnLevelSuccess(LevelArgs levelArgs) => levelSuccess?.Invoke(levelArgs);
-        public void TriggerOnMechanicSuccess() => mechanicSuccess?.Invoke();
-        public void TriggerOnReloadScene() => reloadScene?.Invoke();
-        public void TriggerOnMechanicChange(MechanicBase mechanic) => mechanicChange?.Invoke(mechanic);
-
+        public UnityEvent reloadScene;
+        
+        public void OnSceneIsCreated(LevelArgs levelArgs) => sceneCreation?.Invoke(levelArgs);
+        public void OnGameStart(LevelArgs levelArgs) => gameStart?.Invoke(levelArgs);
+        public void OnLevelSuccess(LevelArgs levelArgs) => levelSuccess?.Invoke(levelArgs);
+        
+        public void OnMechanicStart(MechanicBase mechanicBase) => mechanicStart?.Invoke(mechanicBase);
+        public void OnMechanicFail(MechanicBase mechanicBase) => mechanicFail?.Invoke(mechanicBase);
+        public void OnMechanicSuccess(MechanicBase mechanicBase) => mechanicSuccess?.Invoke(mechanicBase);
+        
+        public void OnReloadScene() => reloadScene?.Invoke();
     }
 
     public class LevelArgs

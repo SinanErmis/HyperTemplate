@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Rhodos.Core.Mechanics.Bases;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Rhodos.Core
@@ -14,26 +15,28 @@ namespace Rhodos.Core
         private void Start()
         {
             ActiveLevel = CreateLevel();
-            EventManager.Instance.TriggerOnSceneCreated(new LevelArgs(ActiveLevel, SaveLoadManager.GetLevel()));
-            EventManager.Instance.TriggerOnMechanicChange(ActiveLevel.ActiveMechanic);
-
+            LevelArgs currentArgs = new LevelArgs(ActiveLevel, SaveLoadManager.GetLevel());
+            EventManager.Instance.OnSceneIsCreated(currentArgs);
+            
+            //Uncomment it if you want to start game without an onboarding / main menu screen.
+            //EventManager.Instance.OnGameStart(currentArgs);
         }
 
         //subs to on mechanic success
-        public void NextMechanicOrNextLevel()
+        public void HandleMechanicChange(MechanicBase mechanic)
         {
             ActiveLevel.IncreaseMechanicIndex();
 
             if (ActiveLevel.IsEnded)
             {
-                EventManager.Instance.TriggerOnLevelSuccess(new LevelArgs(ActiveLevel, SaveLoadManager.GetLevel()));
+                EventManager.Instance.OnLevelSuccess(new LevelArgs(ActiveLevel, SaveLoadManager.GetLevel()));
             }
             else
             {
-                EventManager.Instance.TriggerOnMechanicChange(ActiveLevel.ActiveMechanic);
+                EventManager.Instance.OnMechanicStart(ActiveLevel.ActiveMechanic);
             }
         }
-        
+
         /// <summary>
         /// Creates test level if exists, otherwise creates next level.
         /// </summary>
