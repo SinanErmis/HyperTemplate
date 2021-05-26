@@ -1,5 +1,5 @@
 ﻿using System;
-using Rhodos.Core.Mechanics.Bases;
+using Rhodos.Mechanics.Bases;
 using UnityEngine;
 
 namespace Rhodos.Core

@@ -1,4 +1,4 @@
-﻿using Rhodos.Core.Mechanics.Bases;
+﻿using Rhodos.Mechanics.Bases;
 using UnityEngine.Events;
 using Rhodos.Toolkit;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using MyBox;
-using Rhodos.Core.Mechanics.Bases;
+using Rhodos.Mechanics.Bases;
 using Rhodos.Toolkit.Extensions;
 using Rhodos.UI;
 using UnityEngine;

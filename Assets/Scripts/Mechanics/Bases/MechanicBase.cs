@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Rhodos.Core;
 using UnityEngine;
 
-namespace Rhodos.Core.Mechanics.Bases
+namespace Rhodos.Mechanics.Bases
 {
     public abstract class MechanicBase : MonoBehaviour
     {

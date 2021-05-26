@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Rhodos.Core.Mechanics.Bases
+namespace Rhodos.Mechanics.Bases
 {
     public abstract class TapAndHold : MechanicBase
     {

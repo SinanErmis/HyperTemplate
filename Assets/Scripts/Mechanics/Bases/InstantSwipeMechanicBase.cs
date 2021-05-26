@@ -1,7 +1,7 @@
 ﻿using Rhodos.Toolkit;
 using UnityEngine;
 
-namespace Rhodos.Core.Mechanics.Bases
+namespace Rhodos.Mechanics.Bases
 {
     /// <summary>
     /// A base mechanic class that triggers SwipeAction with a direction and magnitude in every frame that drag continues.
