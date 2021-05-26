@@ -60,3 +60,4 @@ crashlytics-build.properties
 
 # Auto generated MyBox asset files
 ProjectSettings/MyBoxSettings.asset
+'.idea' 
