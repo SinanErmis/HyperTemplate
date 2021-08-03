@@ -1,4 +1,6 @@
 ﻿using System;
+using MyBox;
+using NaughtyAttributes;
 using Rhodos.Mechanics.Bases;
 using UnityEngine;
 
@@ -6,51 +8,26 @@ namespace Rhodos.Core
 {
     public class MechanicManager : MonoBehaviour
     {
-        public MechanicBase activeMechanic;
+        [HideInInspector] public bool isGameTypeUniqueMechanics;
+        [EnableIf("isGameTypeUniqueMechanics")] public Mechanic[] mechanics;
         
-        #region Events
-        private event Action OnDown;
-        private event Action OnDrag;
-        private event Action OnUp;
-        public object IsActiveMechanicExist => activeMechanic != null;
-
-        public void TriggerOnDown() => OnDown?.Invoke();
-        public void TriggerOnDrag() => OnDrag?.Invoke();
-        public void TriggerOnUp() => OnUp?.Invoke();
-        #endregion
+        public Mechanic ActiveMechanic => mechanics[_index];
+        private int _index;
         
-        public void CallMechanicActivateSequence(MechanicBase mechanicBase)
+        public bool DidLevelEnd => _index + 1 >= mechanics.Length;
+        public void IncreaseMechanicCounter() => _index++;
+
+        private void Update()
         {
-            mechanicBase.StartCoroutine(mechanicBase.OnActivate());
-        }
-        public void CallMechanicDeactivate(MechanicBase mechanicBase)
-        {
-            mechanicBase.OnDeactivate();
-        }        
-        public void CallMechanicFail(MechanicBase mechanicBase)
-        {
-            mechanicBase.OnFail();
+            if(!GameManager.I.canPlay) return;
+
+            if (Input.GetMouseButtonDown(0))
+                ActiveMechanic.OnDown();
+            else if (Input.GetMouseButton(0))
+                ActiveMechanic.OnDrag();
+            else if (Input.GetMouseButtonUp(0))
+                ActiveMechanic.OnUp();
         }
 
-        public void StartFirstMechanic(LevelArgs level)
-        {
-            EventManager.Instance.OnMechanicStart(level.Level.ActiveMechanic);
-        }
-
-        public void SubscribeTouchEvents(MechanicBase mechanic)
-        {
-            activeMechanic = mechanic;
-            OnDown += mechanic.OnDown;
-            OnDrag += mechanic.OnDrag;
-            OnUp += mechanic.OnUp;
-        }
-
-        public void UnsubscribeTouchEvents(MechanicBase mechanic)
-        {
-            activeMechanic = null;
-            OnDown -= mechanic.OnDown;
-            OnDrag -= mechanic.OnDrag;
-            OnUp -= mechanic.OnUp;
-        }
     }
 }

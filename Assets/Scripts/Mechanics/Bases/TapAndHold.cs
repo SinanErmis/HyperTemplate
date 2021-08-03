@@ -3,21 +3,16 @@ using UnityEngine;
 
 namespace Rhodos.Mechanics.Bases
 {
-    public abstract class TapAndHold : MechanicBase
+    public abstract class TapAndHold : Mechanic
     {
         private float _timer;
-        protected abstract float TriggerInterval { get; set; }
+        [SerializeField] protected float triggerInterval;
         protected abstract void Action();
-
-        public override void OnDown()
-        {
-            
-        }
 
         public override void OnDrag()
         {
             _timer += Time.deltaTime;
-            if (_timer >= TriggerInterval)
+            if (_timer >= triggerInterval)
             {
                 Action();
                 _timer = 0;

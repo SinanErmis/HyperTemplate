@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Rhodos.Toolkit
 {
     /// <summary>
-    /// Generic Serializable Dictionary for Unity 2020.1.
+    /// Generic Serializable Dictionary
     /// Simply declare your key/value types and you're good to go - zero boilerplate.
     /// </summary>
     [Serializable]

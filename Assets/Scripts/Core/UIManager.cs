@@ -10,12 +10,12 @@ namespace Rhodos.Core
 {
     public class UIManager : MonoBehaviour
     {
-        [SerializeField] private UIScreen[] uiScreens;
         private static UIScreen _activeScreen;
 
-        private void Awake()
+        private IEnumerator Start()
         {
-            AdjustCanvasRatio();
+            yield return null;
+            StartCoroutine(ChangeUI(MainScreens.MainMenu));
         }
 
         public static IEnumerator ChangeUI(UIScreen uiScreen)
@@ -35,33 +35,51 @@ namespace Rhodos.Core
             }
             _activeScreen = uiScreen;
         }
-
-        /// <summary>
-        /// Makes UI Screens work properly on both Iphones and Ipads
-        /// </summary>
-        private void AdjustCanvasRatio()
+        public static IEnumerator ChangeUI(MainScreens screen)
         {
-            float screenRatio;
-
-            float rat = (float) Screen.width / (float) Screen.height;
-
-            if (rat < .56f)
+            UIScreen uiScreen = screen switch
             {
-                screenRatio = 0f;
-                CameraManager.Camera.fieldOfView += 8;
+                MainScreens.MainMenu => GameManager.I.Managers.UIManager.mainMenu,
+                MainScreens.Success  => GameManager.I.Managers.UIManager.success,
+                MainScreens.Fail     => GameManager.I.Managers.UIManager.fail,
+                _ => throw new ArgumentOutOfRangeException(nameof(screen), screen, null)
+            };
+            
+            if (_activeScreen == null)
+            {
+                Debug.Log("Screen In: ".Colored(Colors.green) + uiScreen.name);
+                uiScreen.PlayInAnimation().StartCoroutine();
             }
-
-            else if (rat >= .56f && rat < .624f)
-                screenRatio = .5f;
             else
-                screenRatio = 1f;
-
-
-            foreach (UIScreen uiScreen in uiScreens)
             {
-                CanvasScaler cs = uiScreen.gameObject.GetComponent<CanvasScaler>();
-                if (cs != null) cs.matchWidthOrHeight = screenRatio;
+                Debug.Log("Screen Out: ".Colored(Colors.red) + _activeScreen +
+                          "\nScreen In: ".Colored(Colors.green) + uiScreen);
+                
+                yield return uiScreen.StartCoroutine(_activeScreen.PlayOutAnimation())
+                    .StartNext(uiScreen.PlayInAnimation());
             }
+            _activeScreen = uiScreen;
         }
+
+        // ! future idea
+        /*enum GameStartType
+        {
+            WithPlayButton, //simple one
+            SeamlessButton, //again with a button, but this button triggers first OnDown so creates a seamless transition
+            WithoutAnything,//start first mechanic when scene loaded
+        }*/
+
+        public enum MainScreens
+        {
+            MainMenu,
+            Success,
+            Fail
+        }
+
+        [SerializeField] private MainMenu mainMenu;
+        [SerializeField] private SuccessScreen success;
+        [SerializeField] private FailScreen fail;
+        
+        
     }
 }

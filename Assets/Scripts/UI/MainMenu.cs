@@ -3,44 +3,38 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Rhodos.Core;
+using TMPro;
 
 namespace Rhodos.UI
 {
     public class MainMenu : UIScreen
     {
-        [SerializeField] private Text levelCounter;
-        [SerializeField] private Button playButton;
+        [SerializeField] private AnimatableUI<TextMeshProUGUI> levelCounter;
+        [SerializeField] private AnimatableUI<Button> playButton;
 
-        public void Start()
+        private void Start()
         {
             UpdateLevelCounter();
-            Activate();
         }
 
         private void UpdateLevelCounter()
         {
             //Level counter logic starts counting from 0, but user will see level sign starts from 1. 
-            levelCounter.text = "Level " + (SaveLoadManager.GetLevel() + 1);
+            levelCounter.UIComponent.text = "Level " + (SaveLoadManager.GetLevel() + 1);
         }
 
         public override IEnumerator PlayInAnimation()
         {
-            RectTransform t_levelCounter = levelCounter.GetComponent<RectTransform>();
-            Vector2 oldPosOfLevelCounter = t_levelCounter.anchoredPosition;
-
-            RectTransform t_playButton = playButton.GetComponent<RectTransform>();
-            Vector2 oldPosOfPlayButton = t_playButton.anchoredPosition;
-
             gameObject.SetActive(true);
-            t_levelCounter.DOAnchorPos(oldPosOfLevelCounter, 1f).From(Vector2.up * 100f).SetEase(Ease.OutBack);
-            t_playButton.DOAnchorPos(oldPosOfPlayButton, 1f).From(Vector2.down * 100f);
-            yield return new WaitForSecondsRealtime(1f);
+            StartCoroutine(levelCounter.PlayInAnimation(1f));
+            yield return StartCoroutine(playButton.PlayInAnimation(1f));
         }
 
         public override IEnumerator PlayOutAnimation()
         {
+            StartCoroutine(levelCounter.PlayOutAnimation(1f));
+            yield return StartCoroutine(playButton.PlayOutAnimation(1f));
             gameObject.SetActive(false);
-            yield break;
         }
     }
 }

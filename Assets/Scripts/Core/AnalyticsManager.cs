@@ -3,75 +3,68 @@ using UnityEngine;
 
 namespace Rhodos.Core
 {
-
-    // TODO: REWORK NEEDED!!!!!!!!!!!!!!
-    // Rearrange event system
-    // Set constants for player prefs and sdk event keys
-    // Maybe make that class scriptable object(it will continue to live during game runtime, and no need for singleton)
     /// <summary>
-    /// This class for can be used for send analytics events to the server. Thanks to the event driven design, it is easy to
-    /// extend and implement different SDK's
+    /// This class for can be used for send analytics events to the server.
+    /// To use with different SDKs replace body of SendEvent() method.
     /// </summary>
     public class AnalyticsManager : MonoBehaviour
     {
-        private static float _lastInterstitialTime;
-        public static AnalyticsManager instance;
+        public static AnalyticsManager Instance;
 
         private int _lastPlayedLevelOrder = -1;
+        private static float _lastInterstitialTime;
+        private const float INTERSTITIAL_INTERVAL = 30f;
+
+        #region Keys
+
+        private const string PLAYED_ONCE_KEY = "PlayedOnce";
+        private const string LIFETIME_INTERSTITIAL_KEY = "LifetimeInterstitial";
+        
+        #endregion
+
+        private bool DidPlayerPlayOnce
+        {
+            get => PlayerPrefs.GetInt(PLAYED_ONCE_KEY, 0) == 1;
+            set => PlayerPrefs.SetInt(PLAYED_ONCE_KEY, 1);
+        }
 
         private void Awake()
         {
-            //TODO: Rearrange
-            /*CentralEventManager.OnReloadScene += ShowInterstitial;
-
-            CentralEventManager.OnGameStart += (level, order) =>
-            {
-                SendEvent($"Level_start_{order}");
-                _lastPlayedLevelOrder = order;
-            };
-
-            CentralEventManager.OnSuccess += (level, order) => SendEvent($"Level_succeed_{order}");
-            CentralEventManager.OnUnsuccess += (level, order) => SendEvent($"Level_failed_{order}");
-            */
-
-            if (instance == null)
+            if (Instance == null)
                 Init();
-            else if (instance != this)
+            else if (Instance != this)
                 Destroy(gameObject);
         }
 
         private void OnApplicationQuit()
         {
-            if (!IsPlayedOnce())
+            if (!DidPlayerPlayOnce)
             {
                 SendEvent($"First_Session_Level_{_lastPlayedLevelOrder}");
                 SendEvent($"First_Session_Interstitial_Count_{GetLifetimeInterstitial()}");
-                SavePlayedOnce();
+                DidPlayerPlayOnce = true;
             }
         }
-
-        private static bool IsPlayedOnce() => PlayerPrefs.GetInt("playedonce", 0) == 1;
-        private static void SavePlayedOnce() => PlayerPrefs.SetInt("playedonce", 1);
         private void Init()
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
 
-        private static void ShowInterstitial()
+        public static void ShowInterstitial()
         {
-            if (Time.realtimeSinceStartup - _lastInterstitialTime >= 30f)
+            if (Time.realtimeSinceStartup - _lastInterstitialTime >= INTERSTITIAL_INTERVAL)
             {
                 SendEvent("Fake_interstitial");
                 IncreaseLifetimeInterstitial();
-                SendEvent($"Lifetime_Interstitial_{GetLifetimeInterstitial()}");
+                SendEvent($"{LIFETIME_INTERSTITIAL_KEY}_{GetLifetimeInterstitial()}");
                 _lastInterstitialTime = Time.realtimeSinceStartup;
             }
         }
 
         private static void IncreaseLifetimeInterstitial() =>
-            PlayerPrefs.SetInt("LifetimeInterstital", GetLifetimeInterstitial() + 1);
-        private static int GetLifetimeInterstitial() => PlayerPrefs.GetInt("LifetimeInterstitial", 0);
+            PlayerPrefs.SetInt(LIFETIME_INTERSTITIAL_KEY, GetLifetimeInterstitial() + 1);
+        private static int GetLifetimeInterstitial() => PlayerPrefs.GetInt(LIFETIME_INTERSTITIAL_KEY, 0);
 
 
         private static void SendEvent(string eventMessage) => Debug.Log($"<color=blue>EVENT: {eventMessage} </color>");
