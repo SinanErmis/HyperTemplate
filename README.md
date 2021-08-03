@@ -31,5 +31,5 @@ HyperTemplate uses one-scene setup. There are 2 main workflow that I am using:
   
  - [ ] Add working chest system
  - [ ] Add simple shaders such as toon shader, toon with outer lines etc.
- - [ ] Add some VFX such as confettis, particles, glares etc.
+ - [ ] Add some VFX such as confettis, particles etc.
  - [ ] Complete documentation(add detailed description for every utility)
