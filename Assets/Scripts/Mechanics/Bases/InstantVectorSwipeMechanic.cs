@@ -20,7 +20,7 @@ namespace Rhodos.Mechanics.Bases
         public override void OnDrag()
         {
             SwipeAction((Vector2) Input.mousePosition - _firstPos);
-            if (!isCumulative) _firstPos = Input.mouseScrollDelta;
+            if (!isCumulative) _firstPos = Input.mousePosition;
         }
         
         protected abstract void SwipeAction(Vector2 swipe);
