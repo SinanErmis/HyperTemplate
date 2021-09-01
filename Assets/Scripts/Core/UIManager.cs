@@ -60,6 +60,12 @@ namespace Rhodos.Core
             }
             _activeScreen = uiScreen;
         }
+        
+        public static IEnumerator EmptyUI()
+        {
+            yield return _activeScreen.StartCoroutine(_activeScreen.PlayOutAnimation());
+            _activeScreen = null;
+        }
 
         // ! future idea
         /*enum GameStartType
