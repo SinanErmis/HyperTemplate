@@ -8,6 +8,12 @@ namespace Rhodos.Mechanics.Bases
 {
     public abstract class Mechanic : MonoBehaviour
     {
+        protected bool CanPlay
+        {
+            get => GameManager.I.canPlay;
+            set => GameManager.I.canPlay = value;
+        }
+        
         public virtual IEnumerator OnStart()
         {
             yield break;
