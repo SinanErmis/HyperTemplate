@@ -61,7 +61,7 @@ namespace Rhodos.Core
 
             IEnumerator InnerOnFail()
             {
-                yield return StartCoroutine(Managers.MechanicManager.ActiveMechanic.OnEnd());
+                yield return StartCoroutine(Managers.MechanicManager.ActiveMechanic.OnFail());
                 StartCoroutine(UIManager.ChangeUI(UIManager.MainScreens.Fail));
             }
         }
