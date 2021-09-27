@@ -12,10 +12,14 @@ namespace Rhodos.Core
     public class GameManager : MonoBehaviour
     {
         public bool canPlay;
+        
         [Tooltip("Unique mechanic disables level manager")]
         [OnValueChanged("GameTypeCheck")]
         public GameType gameType;
+        
         [field: SerializeField] public Managers Managers { get; private set; }
+        [field: SerializeField] public Assets   Assets   { get; private set; }
+        
         public static GameManager I { get; private set; }
 
         private void Awake()
@@ -91,10 +95,17 @@ namespace Rhodos.Core
     [Serializable]
     public class Managers
     {
+        public static Managers I => GameManager.I.Managers;
         [field: SerializeField] public CameraManager CameraManager { get; private set; }
         [field: SerializeField] public UIManager UIManager { get; private set; }
         [field: SerializeField] public LevelManager LevelManager { get; private set; }
         [field: SerializeField] public MechanicManager MechanicManager { get; private set; }
         [field: SerializeField] public SaveLoadManager SaveLoadManager { get; private set; }
+    }
+    [Serializable]
+    public class Assets
+    {
+        public static Assets I => GameManager.I.Assets;
+        //Place your static-reachable assets here. 
     }
 }
