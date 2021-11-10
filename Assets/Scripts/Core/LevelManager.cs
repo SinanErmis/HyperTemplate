@@ -24,7 +24,7 @@ namespace Rhodos.Core
         /// <returns></returns>
         private Level CreateLevel()
         {
-            Level level = Instantiate(testLevel != null ? testLevel : allLevels[SaveLoadManager.GetLevel()],
+            Level level = Instantiate(testLevel != null ? testLevel : allLevels[SaveLoadManager.GetLevel() % allLevels.Length],
                 levelHolder);
             return level;
         }
