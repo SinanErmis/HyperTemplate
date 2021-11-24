@@ -20,7 +20,7 @@ namespace Rhodos.Core
 
         public IEnumerator ChangeUI(UIScreen uiScreen)
         {
-            if (ActiveScreen) yield return StartCoroutine(ActiveScreen.PlayInAnimation());
+            if (ActiveScreen) yield return StartCoroutine(ActiveScreen.PlayOutAnimation());
             ActiveScreen = uiScreen;
             if (ActiveScreen) yield return StartCoroutine(ActiveScreen.PlayInAnimation());
         }
