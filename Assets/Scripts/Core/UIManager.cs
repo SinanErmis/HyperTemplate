@@ -10,7 +10,7 @@ namespace Rhodos.Core
 {
     public class UIManager : MonoBehaviour
     {
-        private static UIScreen _activeScreen;
+        public UIScreen ActiveScreen { get; private set; }
 
         private IEnumerator Start()
         {
@@ -18,24 +18,13 @@ namespace Rhodos.Core
             StartCoroutine(ChangeUI(MainScreens.MainMenu));
         }
 
-        public static IEnumerator ChangeUI(UIScreen uiScreen)
+        public IEnumerator ChangeUI(UIScreen uiScreen)
         {
-            if (_activeScreen == null)
-            {
-                Debug.Log("Screen In: ".Colored(Colors.green) + uiScreen.name);
-                uiScreen.PlayInAnimation().StartCoroutine();
-            }
-            else
-            {
-                Debug.Log("Screen Out: ".Colored(Colors.red) + _activeScreen +
-                          "\nScreen In: ".Colored(Colors.green) + uiScreen);
-                
-                yield return uiScreen.StartCoroutine(_activeScreen.PlayOutAnimation())
-                                     .StartNext(uiScreen.PlayInAnimation());
-            }
-            _activeScreen = uiScreen;
+            if (ActiveScreen) yield return StartCoroutine(ActiveScreen.PlayInAnimation());
+            ActiveScreen = uiScreen;
+            if (ActiveScreen) yield return StartCoroutine(ActiveScreen.PlayInAnimation());
         }
-        public static IEnumerator ChangeUI(MainScreens screen)
+        public IEnumerator ChangeUI(MainScreens screen)
         {
             UIScreen uiScreen = screen switch
             {
@@ -44,27 +33,8 @@ namespace Rhodos.Core
                 MainScreens.Fail     => GameManager.I.Managers.UIManager.fail,
                 _ => throw new ArgumentOutOfRangeException(nameof(screen), screen, null)
             };
-            
-            if (_activeScreen == null)
-            {
-                Debug.Log("Screen In: ".Colored(Colors.green) + uiScreen.name);
-                uiScreen.PlayInAnimation().StartCoroutine();
-            }
-            else
-            {
-                Debug.Log("Screen Out: ".Colored(Colors.red) + _activeScreen +
-                          "\nScreen In: ".Colored(Colors.green) + uiScreen);
-                
-                yield return uiScreen.StartCoroutine(_activeScreen.PlayOutAnimation())
-                    .StartNext(uiScreen.PlayInAnimation());
-            }
-            _activeScreen = uiScreen;
-        }
-        
-        public static IEnumerator EmptyUI()
-        {
-            yield return _activeScreen.StartCoroutine(_activeScreen.PlayOutAnimation());
-            _activeScreen = null;
+
+            return ChangeUI(uiScreen);
         }
 
         // ! future idea

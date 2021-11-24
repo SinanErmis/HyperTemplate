@@ -36,5 +36,9 @@ namespace Rhodos.UI
             yield return StartCoroutine(playButton.PlayOutAnimation(1f));
             gameObject.SetActive(false);
         }
+        public void OnPlayButtonPressed()
+        {
+            StartCoroutine(Managers.I.MechanicManager.ActiveMechanic.OnStart());
+        }
     }
 }

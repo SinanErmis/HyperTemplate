@@ -114,11 +114,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Bumpo SDF
+  m_Name: Bumpo SDF Text Mesh Material
   m_EditorClassIdentifier: 
-  hashCode: 1107699412
+  hashCode: 1615342705
   material: {fileID: -5664167746885638898}
-  materialHashCode: 814539124
+  materialHashCode: -1612538063
   m_Version: 1.1.0
   m_SourceFontFileGUID: dca7afcde023a8a4a8aa8debbdbd5427
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: dca7afcde023a8a4a8aa8debbdbd5427, type: 3}

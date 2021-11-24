@@ -16,10 +16,11 @@ namespace Rhodos.Core
         [Tooltip("Unique mechanic disables level manager")]
         [OnValueChanged("GameTypeCheck")]
         public GameType gameType;
-        
+
         [field: SerializeField] public Managers Managers { get; private set; }
-        [field: SerializeField] public Assets   Assets   { get; private set; }
-        
+        [field: SerializeField] public Assets Assets { get; private set; }
+        [field: SerializeField] public References References { get; private set; }
+
         public static GameManager I { get; private set; }
 
         private void Awake()
@@ -48,7 +49,7 @@ namespace Rhodos.Core
                 if (Managers.MechanicManager.DidLevelEnd)
                 {
                     Managers.SaveLoadManager.IncreaseLevel();
-                    StartCoroutine(UIManager.ChangeUI(UIManager.MainScreens.Success));
+                    StartCoroutine(Managers.UIManager.ChangeUI(UIManager.MainScreens.Success));
                     AnalyticsManager.ShowInterstitial();
                 }
                 else
@@ -66,7 +67,7 @@ namespace Rhodos.Core
             IEnumerator InnerOnFail()
             {
                 yield return StartCoroutine(Managers.MechanicManager.ActiveMechanic.OnFail());
-                StartCoroutine(UIManager.ChangeUI(UIManager.MainScreens.Fail));
+                StartCoroutine(Managers.UIManager.ChangeUI(UIManager.MainScreens.Fail));
             }
         }
 
@@ -106,6 +107,12 @@ namespace Rhodos.Core
     public class Assets
     {
         public static Assets I => GameManager.I.Assets;
+        //Place your static-reachable assets here. 
+    }
+    [Serializable]
+    public class References
+    {
+        public static References I => GameManager.I.References;
         //Place your static-reachable assets here. 
     }
 }
