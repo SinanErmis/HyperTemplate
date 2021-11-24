@@ -12,9 +12,6 @@ namespace Rhodos.Core
     public class GameManager : MonoBehaviour
     {
         public bool canPlay;
-        
-        [Tooltip("Unique mechanic disables level manager")]
-        [OnValueChanged("GameTypeCheck")]
         public GameType gameType;
 
         [field: SerializeField] public Managers Managers { get; private set; }
@@ -68,21 +65,6 @@ namespace Rhodos.Core
             {
                 yield return StartCoroutine(Managers.MechanicManager.ActiveMechanic.OnFail());
                 StartCoroutine(Managers.UIManager.ChangeUI(UIManager.MainScreens.Fail));
-            }
-        }
-
-        private void GameTypeCheck()
-        {
-            if (gameType == GameType.UniqueMechanics)
-            {
-                Managers.LevelManager.gameObject.SetActive(false);
-                Managers.MechanicManager.isGameTypeUniqueMechanics = true;
-            }
-            else
-            {
-                Managers.LevelManager.gameObject.SetActive(true);
-                Managers.MechanicManager.isGameTypeUniqueMechanics = false;
-
             }
         }
 
