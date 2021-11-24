@@ -9,12 +9,13 @@
  - Enjoy!
 
 ### Dependencies
-All dependencies are auto-installing via Unity Package Manager, you don't need to do anything. 
+All dependencies are auto-installing via Unity Package Manager, you don't need to do anything. License files can be found under relative directories.
 
  - [MyBox](https://github.com/Deadcows/MyBox) by [Deadcows](http://deadcow.ru/)
  - [Naughty Attributes](https://github.com/dbrizov/NaughtyAttributes) by [Denis Rizov](https://denisrizov.com/)
  - [DOTween](https://github.com/Demigiant/dotween) by [Demigiant](http://demigiant.com/)
  - [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) by [Newtonsoft](https://www.newtonsoft.com/json)
+ - [Joystick Pack](https://assetstore.unity.com/packages/tools/input-management/joystick-pack-107631) by [Fenerax Studios](https://assetstore.unity.com/publishers/32730)
  - And some other Unity registries.
 
 ### Main Features & Workflow
