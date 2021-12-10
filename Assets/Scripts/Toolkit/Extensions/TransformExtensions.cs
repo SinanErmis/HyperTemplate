@@ -19,5 +19,24 @@ namespace Rhodos.Toolkit.Extensions
                 yield return null;
             }
         }
+                
+        public static void SlowLookAt(this Transform transform, Vector3 target, float speed)
+        {
+            Quaternion targetRot = Quaternion.FromToRotation(transform.position, target);
+            transform.rotation = Quaternion.Slerp(transform.rotation , targetRot, Time.deltaTime * speed);
+        }
+        public static void SlowLookAt(this Transform transform, Transform target, float speed)
+        {
+            Quaternion targetRot = Quaternion.FromToRotation(transform.position, target.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation , targetRot, Time.deltaTime * speed);
+        }
+        public static void SlowMoveTo(this Transform transform, Vector3 target, float speed)
+        {
+            transform.position = Vector3.Lerp(transform.position , target, Time.deltaTime * speed);
+        }       
+        public static void SlowMoveTo(this Transform transform, Transform target, float speed)
+        {
+            transform.position = Vector3.Lerp(transform.position , target.position, Time.deltaTime * speed);
+        }
     }
 }
