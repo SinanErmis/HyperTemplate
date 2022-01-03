@@ -25,18 +25,44 @@ namespace Rhodos.Toolkit.Extensions
             Quaternion targetRot = Quaternion.FromToRotation(transform.position, target);
             transform.rotation = Quaternion.Slerp(transform.rotation , targetRot, Time.deltaTime * speed);
         }
+        
         public static void SlowLookAt(this Transform transform, Transform target, float speed)
         {
             Quaternion targetRot = Quaternion.FromToRotation(transform.position, target.position);
             transform.rotation = Quaternion.Slerp(transform.rotation , targetRot, Time.deltaTime * speed);
         }
+        
         public static void SlowMoveTo(this Transform transform, Vector3 target, float speed)
         {
             transform.position = Vector3.Lerp(transform.position , target, Time.deltaTime * speed);
-        }       
+        }
+        
         public static void SlowMoveTo(this Transform transform, Transform target, float speed)
         {
             transform.position = Vector3.Lerp(transform.position , target.position, Time.deltaTime * speed);
+        }
+        
+        public static void CopyValuesFrom(this Transform original, Transform target)
+        {
+            original.SetPositionAndRotation(target.position, target.rotation);
+        }
+
+        public static IEnumerator CopyValuesFromInTime(this Transform original, Transform target, float duration)
+        {
+            float timer = 0f;
+            
+            Vector3 startingPos = original.position, targetPos = target.position;
+            Quaternion startingRotation = original.rotation, targetRot = target.rotation;
+            
+            while (timer < duration)
+            {
+                yield return null;
+                timer += Time.deltaTime;
+                float percentage = timer / duration;
+                Vector3 pos = Vector3.Lerp(startingPos, targetPos, percentage);
+                Quaternion rot = Quaternion.Lerp(startingRotation, targetRot, percentage);
+                original.SetPositionAndRotation(pos,rot);
+            }
         }
     }
 }
