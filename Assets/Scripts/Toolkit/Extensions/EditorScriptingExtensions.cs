@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 
 namespace Rhodos.Toolkit.Extensions
@@ -10,3 +11,4 @@ namespace Rhodos.Toolkit.Extensions
         }
     }
 }
+#endif
