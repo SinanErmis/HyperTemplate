@@ -1,10 +1,11 @@
 ﻿using Rhodos.Mechanics.Bases;
+using Toolkit;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Rhodos.Core
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelManager : SingletonBehaviour<LevelManager>
     {
         [SerializeField] private Level[] allLevels;
         [SerializeField] private Level testLevel;
@@ -15,7 +16,7 @@ namespace Rhodos.Core
         private void Start()
         {
             ActiveLevel = CreateLevel();
-            GameManager.I.Managers.MechanicManager.mechanics = ActiveLevel.LevelMechanics;
+            MechanicManager.Instance.mechanics = ActiveLevel.LevelMechanics;
         }
 
         /// <summary>

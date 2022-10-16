@@ -5,10 +5,11 @@ using MyBox;
 using UnityEngine;
 using UnityEngine.UI;
 using Rhodos.UI;
+using Toolkit;
 
 namespace Rhodos.Core
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : SingletonBehaviour<UIManager>
     {
         public UIScreen ActiveScreen { get; private set; }
 
@@ -28,9 +29,9 @@ namespace Rhodos.Core
         {
             UIScreen uiScreen = screen switch
             {
-                MainScreens.MainMenu => GameManager.I.Managers.UIManager.mainMenu,
-                MainScreens.Success  => GameManager.I.Managers.UIManager.success,
-                MainScreens.Fail     => GameManager.I.Managers.UIManager.fail,
+                MainScreens.MainMenu => mainMenu,
+                MainScreens.Success  => success,
+                MainScreens.Fail     => fail,
                 _ => throw new ArgumentOutOfRangeException(nameof(screen), screen, null)
             };
 

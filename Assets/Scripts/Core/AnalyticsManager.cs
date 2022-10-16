@@ -1,4 +1,5 @@
 ﻿using System;
+using Toolkit;
 using UnityEngine;
 
 namespace Rhodos.Core
@@ -7,10 +8,8 @@ namespace Rhodos.Core
     /// This class for can be used for send analytics events to the server.
     /// To use with different SDKs replace body of SendEvent() method.
     /// </summary>
-    public class AnalyticsManager : MonoBehaviour
+    public class AnalyticsManager : SingletonBehaviour<AnalyticsManager>
     {
-        public static AnalyticsManager Instance;
-
         private int _lastPlayedLevelOrder = -1;
         private static float _lastInterstitialTime;
         private const float INTERSTITIAL_INTERVAL = 30f;
@@ -28,14 +27,6 @@ namespace Rhodos.Core
             set => PlayerPrefs.SetInt(PLAYED_ONCE_KEY, 1);
         }
 
-        private void Awake()
-        {
-            if (Instance == null)
-                Init();
-            else if (Instance != this)
-                Destroy(gameObject);
-        }
-
         private void OnApplicationQuit()
         {
             if (!DidPlayerPlayOnce)
@@ -44,11 +35,6 @@ namespace Rhodos.Core
                 SendEvent($"First_Session_Interstitial_Count_{GetLifetimeInterstitial()}");
                 DidPlayerPlayOnce = true;
             }
-        }
-        private void Init()
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         public static void ShowInterstitial()

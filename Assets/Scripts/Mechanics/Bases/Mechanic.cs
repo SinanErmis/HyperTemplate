@@ -10,8 +10,8 @@ namespace Rhodos.Mechanics.Bases
     {
         protected bool CanPlay
         {
-            get => GameManager.I.canPlay;
-            set => GameManager.I.canPlay = value;
+            get => GameManager.Instance.canPlay;
+            set => GameManager.Instance.canPlay = value;
         }
         
         public virtual IEnumerator OnStart()

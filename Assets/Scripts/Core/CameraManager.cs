@@ -2,11 +2,12 @@
 using System.Collections;
 using MyBox;
 using Rhodos.Toolkit.Extensions;
+using Toolkit;
 using UnityEngine;
 
 namespace Rhodos.Core
 {
-    public class CameraManager : MonoBehaviour
+    public class CameraManager : SingletonBehaviour<CameraManager>
     {
         public static Camera Camera { get; private set; }
         public static Transform CameraTransform { get; private set; }

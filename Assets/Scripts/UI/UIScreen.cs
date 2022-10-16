@@ -45,6 +45,6 @@ namespace Rhodos.UI
         public abstract IEnumerator PlayOutAnimation();
 
         [ButtonMethod]
-        public void ActivateThisScreen() => Managers.I.UIManager.ChangeUI(this).StartCoroutine();
+        public void ActivateThisScreen() => UIManager.Instance.ChangeUI(this).StartCoroutine();
     }
 }

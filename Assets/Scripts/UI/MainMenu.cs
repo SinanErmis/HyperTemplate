@@ -38,7 +38,7 @@ namespace Rhodos.UI
         }
         public void OnPlayButtonPressed()
         {
-            StartCoroutine(Managers.I.MechanicManager.ActiveMechanic.OnStart());
+            StartCoroutine(MechanicManager.Instance.ActiveMechanic.OnStart());
         }
     }
 }

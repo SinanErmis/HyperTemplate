@@ -2,11 +2,12 @@
 using MyBox;
 using NaughtyAttributes;
 using Rhodos.Mechanics.Bases;
+using Toolkit;
 using UnityEngine;
 
 namespace Rhodos.Core
 {
-    public class MechanicManager : MonoBehaviour
+    public class MechanicManager : SingletonBehaviour<MechanicManager>
     {
         [HideInInspector] public bool isGameTypeUniqueMechanics;
         [EnableIf("isGameTypeUniqueMechanics")] public Mechanic[] mechanics;
@@ -19,7 +20,7 @@ namespace Rhodos.Core
 
         private void Update()
         {
-            if(!GameManager.I.canPlay) return;
+            if(!GameManager.Instance.canPlay) return;
 
             if (Input.GetMouseButtonDown(0))
                 ActiveMechanic.OnDown();
