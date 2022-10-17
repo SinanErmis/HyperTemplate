@@ -2,6 +2,7 @@
   "dependencies": {
     "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
     "com.domybest.mybox": "https://github.com/Deadcows/MyBox.git",
+    "com.sinanermis.simple-pooling": "https://github.com/SinanErmis/UnitySimplePooling.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "1.15.18",
     "com.unity.ide.rider": "3.0.14",

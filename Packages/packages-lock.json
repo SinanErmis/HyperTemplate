@@ -18,6 +18,13 @@
       },
       "hash": "c711ebe331bd884e0e803c45bf7cafdc2f728902"
     },
+    "com.sinanermis.simple-pooling": {
+      "version": "https://github.com/SinanErmis/UnitySimplePooling.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4b1f6c02795570b6d7b8b57a0f09925023543198"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
